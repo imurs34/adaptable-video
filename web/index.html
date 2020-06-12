@@ -1,141 +1,133 @@
 <!DOCTYPE html>
 <html>
 <head>
-
-<title>Image Appearance</title>
-<meta charset="utf-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1" />
-
+<meta name="viewport" content="width=device-width, initial-scale=1">
 <style>
-
-.resize-drag {
-  background-color: #29e;
-  color: white;
-  font-size: 20px;
-  font-family: sans-serif;
-  border-radius: 8px;
-  padding: 20px;
-  touch-action: none;
-
-  width: 120px;
-
-  /* This makes things *much* easier */
-  box-sizing: border-box;
-}
-#drag-1, #drag-2 {
-  width: 25%;
-  min-height: 6.5em;
-  margin: 10%;
-  background-color: #29e;
-  color: white;
-  border-radius: 0.75em;
-  padding: 4%;
-  touch-action: none;
-  user-select: none;
-  -webkit-transform: translate(0px, 0px);
-          transform: translate(0px, 0px);
+.slidecontainer,#mySlider {
+  width: 100%;
 }
 
-.item {
-  background: red;
-  width:300px; 
-  height:200px;
-  position: absolute; 
+.slider {
+  -webkit-appearance: none;
+  width: 100%;
+  height: 25px;
+  background: #d3d3d3;
+  outline: none;
+  opacity: 0.7;
+  -webkit-transition: .2s;
+  transition: opacity .2s;
 }
 
-.resizer {
-  position: absolute;
-  width: 10px;
-  height:10px;
-  border-radius: 5px; 
-  background-color:black;
-  z-index:2;
+.slider:hover {
+  opacity: 1;
 }
 
-
-.resizer.nw {
-  top: -1px;
-  left:-1px;
-  cursor:nw-resize;
+.slider::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 25px;
+  height: 25px;
+  background: #4CAF50;
+  cursor: pointer;
 }
 
-.resizer.sw {
-  bottom:-1px;
-  left:-1px;
-  cursor:sw-resize;
-
+.slider::-moz-range-thumb {
+  width: 25px;
+  height: 25px;
+  background: #4CAF50;
+  cursor: pointer;
 }
 
-.resizer.ne {
-  top: -1px;
-  right:-1px;
-  cursor:ne-resize;
- 
+#pText {
+  position:absolute; 
+    top:30%; 
+    left:30%; 
+    color:yellow; 
+    font-size:110%; 
 }
-
-.resizer.se {
-  bottom:-1px;
-  right:-1px;
-  cursor:se-resize;
-  
-}
-
-
-
 </style>
-
-
-
-  <!--
-
-
-
-<img id="gallery"  class="resize-drag" src="a.png">
-
-  <div class="resize-drag">
-      Resize from any edge or corner
-  </div>
-    <script src="https://cdn.interactjs.io/00000001.js"></script>
-
-
-<script src="https://cdnjs.cloudflare.com/ajax/libs/modernizr/2.8.3/modernizr.js"></script>
-<script
-  src="https://code.jquery.com/jquery-2.1.0.min.js"
-  integrity="sha256-8oQ1OnzE2X9v4gpRVRMb1DWHoPHJilbur1LP9ykQ9H0="
-  crossorigin="anonymous"></script>
-<script src="https://unpkg.com/interactjs/dist/interact.min.js"></script>
-<source src="waves.mp3" type="audio/mpeg">
-   <source src="horse.ogg" type="audio/ogg">
--->
-
 </head>
-
 <body>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 
-<div class="item"> 
-<div class="resizer ne" ></div>
-  <div class="resizer nw" ></div>
-  <div class="resizer sw" ></div>
-  <div class="resizer se" ></div>
-<img id="gallery" src="1.png" width="300px" height="200px"> 
-<audio id="player" autoplay controls><source src="waves.mp3" type="audio/mp3"></audio>
 
+<script> 
+const NUM_SECONDS_EACH_SLIDE = 4; // seconds for each slide 
+var num = 0; 
+var images = ["img_nature_wide.jpg" , "img_snow_wide.jpg", "img_mountains_wide.jpg"]; 
+var text = ["My Header!" , "My Other Header", "Something I liked to write! "]; 
+function showValue(val) {
+
+var minute = val % 60; 
+minute = minute.toFixed(0); 
+if (num == NUM_SECONDS_EACH_SLIDE * 5) {
+$("#slide").attr("src", images[minute % images.length]);
+$("#numbertext").text(((minute % images.length ) + 1) + " / " + images.length);
+$("#pText").css("top", `${((minute%images.length)+1)*10}%`);
+$("#pText").css("left", `${((minute%images.length)+1)*10}%`);
+num = 0; 
+}
+num++; 
+$("#pText").text(text[minute % text.length]);
+minute = minute == 0 || minute < 10 ? ("0" + minute): minute;
+var hour = parseInt(val / 60); 
+
+document.querySelector("#val").innerHTML = `${hour}:${minute}`; 
+}
+
+var startClock; 
+
+
+function stopClock() {
+  clearInterval(startClock); 
+}
+
+function resetClock() {
+  document.querySelector("#mySlider").value = 0; 
+    stopClock(); 
+    beginClock(); 
+}
+
+
+
+function beginClock(){
+startClock = setInterval(function(){
+    var val = parseFloat(document.querySelector("#mySlider").value) + .2; 
+    //document.querySelector("#val").innerHTML = val.toFixed(0); 
+    document.querySelector("#mySlider").value = val; 
+    showValue(val); 
+   
+},200); 
+
+function getRandomNum() {
+  return Math.floor(Math.random() * 10);  
+}
+}
+</script> 
+<h1>Custom Range Slider</h1>
+
+<div class="slidecontainer">
+ 
+  <!-- 
+  <p>Custom range slider:</p>
+  <input type="range" min="0" max="120" value="0" class="slider" id="myRange" oninput="showValue(this.value)" >
+  
+  --> 
+  
 </div>
-  <!-- t
 
-<div class="item">
-op-left resize handle 
-  <div class="resizer ne" ></div>
-  <div class="resizer nw" ></div>
-  <div class="resizer sw" ></div>
-  <div class="resizer se" ></div>
+<div class="mySlides fade">
+  <div id="numbertext">1 / 3</div>
+  <img id="slide" src="img_nature_wide.jpg" style="width:100%">
+  <p id="pText">My Header!</p> 
 </div>
--->
+   <p id="val"> </p> 
+  <input type="range" min="1" max="120" value="0" id="mySlider" step=".2" oninput="showValue(this.value)" >
+  
 
-<script
-  src="https://code.jquery.com/jquery-2.1.0.min.js"
-  integrity="sha256-8oQ1OnzE2X9v4gpRVRMb1DWHoPHJilbur1LP9ykQ9H0="
-  crossorigin="anonymous"></script>
-  <script src="index.js"></script>
+<button onclick="stopClock()">Pause</button>
+<button onclick="beginClock()">Start</button>
+<button onclick="resetClock()">Reset</button>
+
 </body>
 </html>
