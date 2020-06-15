@@ -1,133 +1,133 @@
 <!DOCTYPE html>
 <html>
+
 <head>
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<style>
-.slidecontainer,#mySlider {
-  width: 100%;
-}
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <style>
+    .slidecontainer,
+    #mySlider {
+      width: 100%;
+    }
 
-.slider {
-  -webkit-appearance: none;
-  width: 100%;
-  height: 25px;
-  background: #d3d3d3;
-  outline: none;
-  opacity: 0.7;
-  -webkit-transition: .2s;
-  transition: opacity .2s;
-}
+    .slider {
+      -webkit-appearance: none;
+      width: 100%;
+      height: 25px;
+      background: #d3d3d3;
+      outline: none;
+      opacity: 0.7;
+      -webkit-transition: .2s;
+      transition: opacity .2s;
+    }
 
-.slider:hover {
-  opacity: 1;
-}
+    .slider:hover {
+      opacity: 1;
+    }
 
-.slider::-webkit-slider-thumb {
-  -webkit-appearance: none;
-  appearance: none;
-  width: 25px;
-  height: 25px;
-  background: #4CAF50;
-  cursor: pointer;
-}
+    .slider::-webkit-slider-thumb {
+      -webkit-appearance: none;
+      appearance: none;
+      width: 25px;
+      height: 25px;
+      background: #4CAF50;
+      cursor: pointer;
+    }
 
-.slider::-moz-range-thumb {
-  width: 25px;
-  height: 25px;
-  background: #4CAF50;
-  cursor: pointer;
-}
+    .slider::-moz-range-thumb {
+      width: 25px;
+      height: 25px;
+      background: #4CAF50;
+      cursor: pointer;
+    }
 
-#pText {
-  position:absolute; 
-    top:30%; 
-    left:30%; 
-    color:yellow; 
-    font-size:110%; 
-}
-</style>
+    #pText {
+      position: absolute;
+      top: 30%;
+      left: 30%;
+      color: yellow;
+      font-size: 110%;
+    }
+  </style>
 </head>
+
 <body>
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 
 
-<script> 
-const NUM_SECONDS_EACH_SLIDE = 4; // seconds for each slide 
-var num = 0; 
-var images = ["img_nature_wide.jpg" , "img_snow_wide.jpg", "img_mountains_wide.jpg"]; 
-var text = ["My Header!" , "My Other Header", "Something I liked to write! "]; 
-function showValue(val) {
+  <script>
+    const NUM_SECONDS_EACH_SLIDE = 4; // seconds for each slide 
+    var num = 0;
+    var images = ["img_nature_wide.jpg", "img_snow_wide.jpg", "img_mountains_wide.jpg"];
+    var text = ["My Header!", "My Other Header", "Something I liked to write! "];
+    function showValue(val) {
 
-var minute = val % 60; 
-minute = minute.toFixed(0); 
-if (num == NUM_SECONDS_EACH_SLIDE * 5) {
-$("#slide").attr("src", images[minute % images.length]);
-$("#numbertext").text(((minute % images.length ) + 1) + " / " + images.length);
-$("#pText").css("top", `${((minute%images.length)+1)*10}%`);
-$("#pText").css("left", `${((minute%images.length)+1)*10}%`);
-num = 0; 
-}
-num++; 
-$("#pText").text(text[minute % text.length]);
-minute = minute == 0 || minute < 10 ? ("0" + minute): minute;
-var hour = parseInt(val / 60); 
+      var minute = val % 60;
+      minute = minute.toFixed(0);
+      if (num == NUM_SECONDS_EACH_SLIDE * 5) {
+        $("#slide").attr("src", images[minute % images.length]);
+        $("#numbertext").text(((minute % images.length) + 1) + " / " + images.length);
+        $("#pText").css("top", `${((minute % images.length) + 1) * 10}%`);
+        $("#pText").css("left", `${((minute % images.length) + 1) * 10}%`);
+        num = 0;
+      }
+      num++;
+      $("#pText").text(text[minute % text.length]);
+      minute = minute == 0 || minute < 10 ? ("0" + minute) : minute;
+      var hour = parseInt(val / 60);
 
-document.querySelector("#val").innerHTML = `${hour}:${minute}`; 
-}
+      document.querySelector("#val").innerHTML = `${hour}:${minute}`;
+    }
 
-var startClock; 
+    var startClock;
+    var hasStarted = false;
+
+    function stopClock() {
+      hasStarted = false;
+      clearInterval(startClock);
+    }
+
+    function resetClock() {
+      document.querySelector("#mySlider").value = 0;
+      stopClock();
+      beginClock();
+    }
 
 
-function stopClock() {
-  clearInterval(startClock); 
-}
+    function beginClock() {
+      if (hasStarted == false) {
+        startClock = setInterval(function () {
+          var val = parseFloat(document.querySelector("#mySlider").value) + .2;
+          //document.querySelector("#val").innerHTML = val.toFixed(0); 
+          document.querySelector("#mySlider").value = val;
+          showValue(val);
+          
+        }, 200);
+        hasStarted = true; 
+      }
 
-function resetClock() {
-  document.querySelector("#mySlider").value = 0; 
-    stopClock(); 
-    beginClock(); 
-}
+
+      function getRandomNum() {
+        return Math.floor(Math.random() * 10);
+      }
+    }
+  </script>
+  <h1>Custom Range Slider</h1>
+
+  <div class="slidecontainer"></div>
+
+  <div class="mySlides fade">
+    <div id="numbertext">1 / 3</div>
+    <img id="slide" src="img_nature_wide.jpg" style="width:100%">
+    <p id="pText">My Header!</p>
+  </div>
+  <p id="val"> </p>
+  <input type="range" min="1" max="120" value="0" id="mySlider" step=".2" oninput="showValue(this.value)">
 
 
-
-function beginClock(){
-startClock = setInterval(function(){
-    var val = parseFloat(document.querySelector("#mySlider").value) + .2; 
-    //document.querySelector("#val").innerHTML = val.toFixed(0); 
-    document.querySelector("#mySlider").value = val; 
-    showValue(val); 
-   
-},200); 
-
-function getRandomNum() {
-  return Math.floor(Math.random() * 10);  
-}
-}
-</script> 
-<h1>Custom Range Slider</h1>
-
-<div class="slidecontainer">
- 
-  <!-- 
-  <p>Custom range slider:</p>
-  <input type="range" min="0" max="120" value="0" class="slider" id="myRange" oninput="showValue(this.value)" >
-  
-  --> 
-  
-</div>
-
-<div class="mySlides fade">
-  <div id="numbertext">1 / 3</div>
-  <img id="slide" src="img_nature_wide.jpg" style="width:100%">
-  <p id="pText">My Header!</p> 
-</div>
-   <p id="val"> </p> 
-  <input type="range" min="1" max="120" value="0" id="mySlider" step=".2" oninput="showValue(this.value)" >
-  
-
-<button onclick="stopClock()">Pause</button>
-<button onclick="beginClock()">Start</button>
-<button onclick="resetClock()">Reset</button>
+  <button onclick="stopClock()">Pause</button>
+  <button onclick="beginClock()">Start</button>
+  <button onclick="resetClock()">Reset</button>
 
 </body>
+
 </html>
