@@ -82,8 +82,10 @@
         $("#numbertext").text(((0 % images.length) + 1) + " / " + images.length);
         $("#pText").css("top", `${((0 % images.length) + 1) * 10}%`);
         $("#pText").css("left", `${((0 % images.length) + 1) * 10}%`);
+        $("#pText").text(text[minute <= 1 ? 0 % text.length : minute % text.length]);
+      }else {
+        $("#pText").text(text[minute % text.length]);
       }
-      $("#pText").text(text[minute % text.length]);
       minute = minute == 0 || minute < 10 ? ("0" + minute) : minute;
       var hour = parseInt(val / 60);
       document.querySelector("#val").innerHTML = `${hour}:${minute}`;
