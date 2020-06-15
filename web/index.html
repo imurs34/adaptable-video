@@ -75,10 +75,13 @@
         $("#numbertext").text(((minute % images.length) + 1) + " / " + images.length);
         $("#pText").css("top", `${((minute % images.length) + 1) * 10}%`);
         $("#pText").css("left", `${((minute % images.length) + 1) * 10}%`);
-      }else  if (minute <= NUM_SECONDS_EACH_SLIDE){
+      }else if (minute <= NUM_SECONDS_EACH_SLIDE){
         // return to first image 
         $("#slide").attr("src", images[0]); // makes it automatically use the original first image so that the previous image is gone. 
         // issue is that we cannot get back to 0. So we know that the first image is the original image to chose from. 
+        $("#numbertext").text(((0 % images.length) + 1) + " / " + images.length);
+        $("#pText").css("top", `${((0 % images.length) + 1) * 10}%`);
+        $("#pText").css("left", `${((0 % images.length) + 1) * 10}%`);
       }
       $("#pText").text(text[minute % text.length]);
       minute = minute == 0 || minute < 10 ? ("0" + minute) : minute;
