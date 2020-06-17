@@ -66,29 +66,19 @@
 
     function showValue(val) {
       
-      var minute = val % 60;
-      log([minute]); 
-      minute = Math.round(minute); 
-     
-    if (minute % (NUM_SECONDS_EACH_SLIDE) == 0) {
-        $("#slide").attr("src", images[minute % images.length]);
-        $("#numbertext").text(((minute % images.length) + 1) + " / " + images.length);
-        $("#pText").css("top", `${((minute % images.length) + 1) * 10}%`);
-        $("#pText").css("left", `${((minute % images.length) + 1) * 10}%`);
-      }else if (minute <= NUM_SECONDS_EACH_SLIDE){
-        // return to first image 
-        $("#slide").attr("src", images[0]); // makes it automatically use the original first image so that the previous image is gone. 
-        // issue is that we cannot get back to 0. So we know that the first image is the original image to chose from. 
-        $("#numbertext").text(((0 % images.length) + 1) + " / " + images.length);
-        $("#pText").css("top", `${((0 % images.length) + 1) * 10}%`);
-        $("#pText").css("left", `${((0 % images.length) + 1) * 10}%`);
-        $("#pText").text(text[minute <= 1 ? 0 % text.length : minute % text.length]);
-      }else {
-        $("#pText").text(text[minute % text.length]);
-      }
+
+      var floored = Math.floor(val); 
+      var imageNum = Math.floor((floored/NUM_SECONDS_EACH_SLIDE)% images.length); 
+      var hour = parseInt(floored / 60);
+      var minute = floored %60; 
       minute = minute == 0 || minute < 10 ? ("0" + minute) : minute;
-      var hour = parseInt(val / 60);
       document.querySelector("#val").innerHTML = `${hour}:${minute}`;
+      $("#numbertext").text(((imageNum) + 1) + " / " + images.length + " - " + images[imageNum]);
+      // log(["Changed value? Outside ",floored, val, imageNum]); 
+      $("#slide").attr("src", images[imageNum]);
+      $("#pText").css("top", `${(imageNum + 2) * 10}%`);
+      $("#pText").css("left", `${(imageNum+ 1) * 10}%`);
+      
     }
 
     var startClock;
@@ -136,7 +126,7 @@
     <p id="pText">My Header!</p>
   </div>
   <p id="val"> </p>
-  <input type="range" min="1" max="120" value="0" id="mySlider" step=".2" oninput="showValue(this.value)">
+  <input type="range" min="0" max="120" value="0" id="mySlider" step=".2" oninput="showValue(this.value)">
 
 
   <button onclick="stopClock()">Pause</button>
