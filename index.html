@@ -140,7 +140,10 @@
             <img class="slide" src="shot11.jpg">
         </div>
         <p id="val"> </p>
-        <input type="range" min="0" max="120" value="0" id="mySlider" step=".2" oninput="showValue(this.value)"
+        <input type="range" min="0" max="120" value="0" id="mySlider" step=".2" 
+
+        onmousedown="stopClock()"
+        oninput="showValue(this.value)"
             onchange="changeAudio(this.value)">
 
 
@@ -164,6 +167,7 @@
         // var images = ["1.png", "2.png", "3.png", "4.png", "5.png", "6.png", "7.png"];
         var text = ["My Header!", "My Other Header", "Something I liked to write! "];
         var audioFile = document.getElementById("audioFile");
+        var mySlider = document.getElementById("mySlider");
 
         
             $(".loading").hide(2000, function () {
@@ -174,10 +178,13 @@
                 $(".slide").attr("width", "75%");
 
             });
+        
 
             // audioFile.oncanplaythrough = function() {
             //         //alert("Can play through audio without stopping");
             // };
+
+        mySlider.addEventListener('mouseup', beginClock); 
 
         audioFile.onended = function () {
             resetClock(); 
@@ -191,6 +198,7 @@
          * is called when on change... means that it is called when the user lets go of the slider. 
          */
         function changeAudio(timeInTrack) {
+            stopClock(); 
             setCurTime(timeInTrack); // changes time of file 
         }
         function showValue(val) {
@@ -239,6 +247,8 @@
         }
 
         function beginClock() {
+            log(['playing']);
+
             if (hasStarted == false) {
                 audioFile.play();
                 startClock = setInterval(function () {
