@@ -3,7 +3,106 @@
 
 <head>
     <meta name="viewport" content="width=device-width, initial-scale=1">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/1.20.3/TweenMax.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/1.20.3/utils/Draggable.min.js"></script>
     <style>
+        #container {
+            display: block;
+            position: relative;
+            /* height: 200px;
+            width: 200px; */
+            background-color: #a37a00;
+            border-radius: 10px;
+        }
+
+        .slide-drag {
+            display: block;
+            position: relative;
+            /* height: 200px;
+            width: 200px; */
+            background-color: #c80000;
+            border-radius: 10px;
+        }
+
+        .green {
+            background: green;
+        }
+
+        .bottomRight {
+            display: block;
+            position: absolute;
+            height: 15px;
+            width: 15px;
+            background: gray;
+            right: 0;
+            bottom: 0;
+        }
+
+        .bottomLeft {
+            display: block;
+            position: absolute;
+            height: 15px;
+            width: 15px;
+            background: gray;
+            left: 0;
+            bottom: 0;
+        }
+
+        .topLeft {
+            display: block;
+            position: absolute;
+            height: 15px;
+            width: 15px;
+            background: gray;
+            left: 0;
+            top: 0;
+        }
+
+        .topRight {
+            display: block;
+            position: absolute;
+            height: 15px;
+            width: 15px;
+            background: gray;
+            right: 0;
+            top: 0;
+        }
+
+        .top {
+            display: block;
+            position: absolute;
+            height: 3px;
+            width: 100%;
+            background: white;
+        }
+
+        .left {
+            display: block;
+            position: absolute;
+            height: 100%;
+            width: 3px;
+            background: white;
+            left: 0;
+        }
+
+        .right {
+            display: block;
+            position: absolute;
+            height: 100%;
+            width: 3px;
+            background: white;
+            right: 0;
+        }
+
+        .bottom {
+            display: block;
+            position: absolute;
+            height: 3px;
+            width: 100%;
+            background: white;
+            bottom: 0;
+        }
+
         #audioFile {
             display: none;
         }
@@ -26,10 +125,10 @@
         }
 
         #content {
-            margin-top:5%;
-      width: 50%;
-      height: 50%;
-    }
+            margin-top: 5%;
+            width: 50%;
+            height: 50%;
+        }
 
         .loader {
             border: 16px solid #f3f3f3;
@@ -91,16 +190,17 @@
             font-size: 110%;
         }
 
-        .slide, #content{
-            display:none; 
+        .slide,
+        #content {
+            display: none;
         }
 
-        #buttonGroup{
-            margin-top: 30px; 
+        #buttonGroup {
+            margin-top: 30px;
         }
 
         .first {
-            display:block;
+            display: block;
         }
     </style>
 </head>
@@ -112,7 +212,7 @@
         <h1>Content is loading...</h1>
         <div class="loader">
         </div>
-    </div> 
+    </div>
 
 
     <div id="content">
@@ -125,39 +225,44 @@
         <h1>Custom Range Slider</h1>
 
 
-        <div class="mySlides fade">
-            <div id="numbertext">1 / 11</div>
+        <div id="numbertext">1 / 11</div>
+        <div class="mySlides fade" id="container">
             <img class="slide first" src="shot1.jpg">
             <img class="slide" src="shot2.jpg">
             <img class="slide" src="shot3.jpg">
             <img class="slide" src="shot4.jpg">
             <img class="slide" src="shot5.jpg">
             <img class="slide" src="shot6.jpg">
-            <img class="slide" src="shot7.jpg" >
-            <img class="slide" src="shot8.jpg" >
-            <img class="slide" src="shot9.jpg" >
-            <img class="slide" src="shot10.jpg" >
+            <img class="slide" src="shot7.jpg">
+            <img class="slide" src="shot8.jpg">
+            <img class="slide" src="shot9.jpg">
+            <img class="slide" src="shot10.jpg">
             <img class="slide" src="shot11.jpg">
+            <div class="right"></div>
+            <div class="bottom"></div>
+            <div class="top"></div>
+            <div class="left"></div>
+            <div class="bottomRight"></div>
+            <div class="topLeft"></div>
+            <div class="topRight"></div>
+            <div class="bottomLeft"></div>
         </div>
         <p id="val"> </p>
-        <input type="range" min="0" max="120" value="0" id="mySlider" step=".2" 
-
-        onmousedown="stopClock()"
-        oninput="showValue(this.value)"
-            onchange="changeAudio(this.value)">
+        <input type="range" min="0" max="120" value="0" id="mySlider" step=".2" onmousedown="stopClock()"
+            oninput="showValue(this.value)" onchange="changeAudio(this.value)">
 
 
 
-            <div id="buttonGroup">
-                <button onclick="stopClock()">Pause</button>
-                <button onclick="beginClock()">Start</button>
-                <button onclick="resetClock()">Reset</button>
-            </div>
-        
+        <div id="buttonGroup">
+            <button onclick="stopClock()">Pause</button>
+            <button onclick="beginClock()">Start</button>
+            <button onclick="resetClock()">Reset</button>
+        </div>
+
 
 
     </div>
-      
+
 
 
     <script>
@@ -169,27 +274,27 @@
         var audioFile = document.getElementById("audioFile");
         var mySlider = document.getElementById("mySlider");
 
-        
-            $(".loading").hide(2000, function () {
-                //audioFile.play(); 
-                resetSlider(); 
-                $("#content").fadeIn();
-                $("#mySlider").attr("max", audioFile.duration);
-                $(".slide").attr("width", "75%");
 
-            });
-        
+        $(".loading").hide(2000, function () {
+            //audioFile.play(); 
+            resetSlider();
+            $("#content").fadeIn();
+            $("#mySlider").attr("max", audioFile.duration);
+            $(".slide").attr("width", "75%");
 
-            // audioFile.oncanplaythrough = function() {
-            //         //alert("Can play through audio without stopping");
-            // };
+        });
 
-        mySlider.addEventListener('mouseup', beginClock); 
+
+        // audioFile.oncanplaythrough = function() {
+        //         //alert("Can play through audio without stopping");
+        // };
+
+        mySlider.addEventListener('mouseup', beginClock);
 
         audioFile.onended = function () {
-            resetClock(); 
-        }; 
-        
+            resetClock();
+        };
+
         function log(arrOfValues) {
             arrOfValues.forEach(x => console.log(x));
         }
@@ -198,7 +303,7 @@
          * is called when on change... means that it is called when the user lets go of the slider. 
          */
         function changeAudio(timeInTrack) {
-            stopClock(); 
+            stopClock();
             setCurTime(timeInTrack); // changes time of file 
         }
         function showValue(val) {
@@ -213,11 +318,11 @@
             document.querySelector("#val").innerHTML = `${hour}:${minute}`;
             $("#numbertext").text(((imageNum) + 1) + " / " + images.length + " - " + images[imageNum]);
             // log(["Changed value? Outside ",floored, val, imageNum]); 
-            $(".slide").each(function( index ) {
-                if (index == imageNum){
-                    $( this ).css("display", "block"); 
-                }else {
-                    $( this ).css("display", "none"); 
+            $(".slide").each(function (index) {
+                if (index == imageNum) {
+                    $(this).css("display", "block");
+                } else {
+                    $(this).css("display", "none");
                 }
             });
             $("#pText").css("top", `${(imageNum + 2) * 10}%`);
@@ -235,7 +340,7 @@
         }
 
         function resetClock() {
-           resetSlider(); 
+            resetSlider();
             stopClock();
             beginClock();
         }
@@ -271,7 +376,99 @@
         function setCurTime(time) {
             // log([time]);
             audioFile.currentTime = time;
-        } 
+        }
+
+        var $container = document.getElementById("container");
+
+        //Proxies
+        var $right = document.createElement("div");
+        var $bottom = document.createElement("div");
+        var $top = document.createElement("div");
+        var $left = document.createElement("div");
+
+        var mainDraggable = new Draggable($container);
+
+        var rightLastX = 0;
+        var rightDraggable = new Draggable($right, {
+            trigger: ".right, .topRight, .bottomRight",
+            cursor: "e-resize",
+            onDrag: updateRight,
+            onPress: function () {
+                rightLastX = this.x;
+                mainDraggable.disable();
+            },
+            onRelease: function () {
+                mainDraggable.enable();
+            }
+        });
+
+        function updateRight() {
+            var diffX = this.x - rightLastX;
+            TweenMax.set($container, { width: "+=" + diffX });
+            rightLastX = this.x;
+        }
+
+        var bottomLastY = 0;
+        var bottomDraggable = new Draggable($bottom, {
+            trigger: ".bottom, .bottomRight, .bottomLeft",
+            cursor: "s-resize",
+            onDrag: updateBottom,
+            onPress: function () {
+                bottomLastY = this.y;
+                mainDraggable.disable();
+            },
+            onRelease: function () {
+                mainDraggable.enable();
+            }
+        });
+
+        function updateBottom() {
+            var diffY = this.y - bottomLastY;
+            TweenMax.set($container, { height: "+=" + diffY });
+            bottomLastY = this.y;
+        }
+
+        var topLastY = 0;
+        var topDraggable = new Draggable($top, {
+            trigger: ".top, .topRight, .topLeft",
+            cursor: "n-resize",
+            onDrag: updateTop,
+            onPress: function () {
+                topLastY = this.y;
+                mainDraggable.disable();
+            },
+            onRelease: function () {
+                mainDraggable.enable();
+            }
+        });
+
+        function updateTop() {
+            var diffY = this.y - topLastY;
+            TweenMax.set($container, { height: "-=" + diffY, y: "+=" + diffY });
+            topLastY = this.y;
+        }
+
+        var leftLastX = 0;
+        var leftDraggable = new Draggable($left, {
+            trigger: ".left, .topLeft, .bottomLeft",
+            cursor: "w-resize",
+            onDrag: updateLeft,
+            onPress: function () {
+                leftLastX = this.x;
+                mainDraggable.disable();
+            },
+            onRelease: function () {
+                mainDraggable.enable();
+            }
+        });
+
+        function updateLeft() {
+            var diffX = this.x - leftLastX;
+            TweenMax.set($container, { width: "-=" + diffX, x: "+=" + diffX });
+            leftLastX = this.x;
+        }
+
+
     </script>
 
 </body>
