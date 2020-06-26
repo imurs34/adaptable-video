@@ -3,6 +3,8 @@
 
 <head>
     <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- https://greensock.com/forums/topic/17657-draggable-resizable/?tab=comments#comment-80098 -->
+    <!-- https://www.w3schools.com/cssref/tryit.asp?filename=trycss_position2 -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/1.20.3/TweenMax.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/1.20.3/utils/Draggable.min.js"></script>
     <style>
@@ -10,8 +12,8 @@
             display: block;
             position: relative;
             /* height: 200px;
-            width: 200px; */
-            background-color: #a37a00;
+            width: 200px;  bg was brown */
+            background-color: none;
             border-radius: 10px;
         }
 
@@ -28,8 +30,18 @@
             background: green;
         }
 
-        .bottomRight {
-            display: block;
+        .bottomRight1,
+        .bottomRight2,
+        .bottomRight3,
+        .bottomRight4,
+        .bottomRight5,
+        .bottomRight6,
+        .bottomRight7,
+        .bottomRight8,
+        .bottomRight9,
+        .bottomRight10,
+        .bottomRight11 {
+            display: none;
             position: absolute;
             height: 15px;
             width: 15px;
@@ -38,8 +50,18 @@
             bottom: 0;
         }
 
-        .bottomLeft {
-            display: block;
+        .bottomLeft1,
+        .bottomLeft3,
+        .bottomLeft2,
+        .bottomLeft4,
+        .bottomLeft5,
+        .bottomLeft6,
+        .bottomLeft7,
+        .bottomLeft9,
+        .bottomLeft8,
+        .bottomLeft10,
+        .bottomLeft11 {
+            display: none;
             position: absolute;
             height: 15px;
             width: 15px;
@@ -48,8 +70,18 @@
             bottom: 0;
         }
 
-        .topLeft {
-            display: block;
+        .topLeft1,
+        .topLeft2,
+        .topLeft3,
+        .topLeft4,
+        .topLeft5,
+        .topLeft6,
+        .topLeft7,
+        .topLeft9,
+        .topLeft8,
+        .topLeft10,
+        .topLeft11 {
+            display: none;
             position: absolute;
             height: 15px;
             width: 15px;
@@ -58,8 +90,18 @@
             top: 0;
         }
 
-        .topRight {
-            display: block;
+        .topRight1,
+        .topRight2,
+        .topRight3,
+        .topRight4,
+        .topRight5,
+        .topRight6,
+        .topRight7,
+        .topRight8,
+        .topRight9,
+        .topRight10,
+        .topRight11 {
+            display: none;
             position: absolute;
             height: 15px;
             width: 15px;
@@ -68,38 +110,79 @@
             top: 0;
         }
 
-        .top {
-            display: block;
+        .top1,
+        .top2,
+        .top3,
+        .top4,
+        .top5,
+        .top6,
+        .top7,
+        .top8,
+        .top9,
+        .top10,
+        .top11 {
+            display: none;
             position: absolute;
             height: 3px;
             width: 100%;
-            background: white;
+            background: none;
         }
 
-        .left {
-            display: block;
+        .left1,
+        .left2,
+        .left3,
+        .left4,
+        .left5,
+        .left6,
+        .left7,
+        .left8,
+        .left9,
+        .left10,
+        .left11 {
+            display: none;
             position: absolute;
             height: 100%;
             width: 3px;
-            background: white;
+            background: none;
             left: 0;
         }
 
-        .right {
-            display: block;
+        .right1,
+        .right2,
+        .right3,
+        .right4,
+        .right5,
+        .right6,
+        .right7,
+        .right8,
+        .right9,
+        .right10,
+        .right11 {
+            display: none;
             position: absolute;
             height: 100%;
             width: 3px;
-            background: white;
+            background: none;
             right: 0;
         }
 
-        .bottom {
-            display: block;
+        .bottom1,
+        .bottom11,
+        .bottom10,
+        .bottom9,
+        .bottom8,
+        .bottom7,
+        .bottom6,
+        .bottom5,
+        .bottom4,
+        .bottom3,
+        .bottom2 {
+            display: none;
             position: absolute;
             height: 3px;
             width: 100%;
-            background: white;
+            background: none;
+            /*was white */
             bottom: 0;
         }
 
@@ -116,18 +199,14 @@
             margin-left: auto;
             margin-right: auto;
             margin-top: 10%;
-
+            margin-top: 5%;
+            width: 50%;
+            height: 50%;
         }
 
         .loading {
             margin-top: 10%;
             margin-left: 50%;
-        }
-
-        #content {
-            margin-top: 5%;
-            width: 50%;
-            height: 50%;
         }
 
         .loader {
@@ -195,12 +274,31 @@
             display: none;
         }
 
-        #buttonGroup {
-            margin-top: 30px;
+        #buttonGroup,#val {
+            margin:0; 
+            padding:0; 
+        }
+        #val{
+            padding-top:5px; 
         }
 
         .first {
             display: block;
+        }
+
+        #controls {
+            position: fixed; 
+            left:0; 
+            bottom: 5px; 
+            width: 100%; 
+            background-color: lightgray;
+            border-radius: 20px;
+            text-align: center;
+        }
+
+        button{
+            border-radius:10px; 
+            color:rgb(156, 115, 0);
         }
     </style>
 </head>
@@ -214,7 +312,6 @@
         </div>
     </div>
 
-
     <div id="content">
 
         <audio id="audioFile" controls preload="auto">
@@ -226,37 +323,53 @@
 
 
         <div id="numbertext">1 / 11</div>
-        <div class="mySlides fade" id="container">
+        <div class="mySlides fade"  id="container1">
+            <!-- <div>Federalist vs. Anti-federalists</div> -->
             <img class="slide first" src="shot1.jpg">
-            <img class="slide" src="shot2.jpg">
-            <img class="slide" src="shot3.jpg">
-            <img class="slide" src="shot4.jpg">
-            <img class="slide" src="shot5.jpg">
-            <img class="slide" src="shot6.jpg">
-            <img class="slide" src="shot7.jpg">
-            <img class="slide" src="shot8.jpg">
-            <img class="slide" src="shot9.jpg">
-            <img class="slide" src="shot10.jpg">
-            <img class="slide" src="shot11.jpg">
-            <div class="right"></div>
-            <div class="bottom"></div>
-            <div class="top"></div>
-            <div class="left"></div>
-            <div class="bottomRight"></div>
-            <div class="topLeft"></div>
-            <div class="topRight"></div>
-            <div class="bottomLeft"></div>
+       
+            <div class="right1"></div>
+            <div class="bottom1"></div>
+            <div class="top1"></div>
+            <div class="left1"></div>
+            <div class="bottomRight1"></div>
+            <div class="topLeft1"></div>
+            <div class="topRight1"></div>
+            <div class="bottomLeft1"></div>
         </div>
-        <p id="val"> </p>
-        <input type="range" min="0" max="120" value="0" id="mySlider" step=".2" onmousedown="stopClock()"
-            oninput="showValue(this.value)" onchange="changeAudio(this.value)">
+
+        <div class="mySlides fade"  id="container1">
+            <!-- <div>Federalist vs. Anti-federalists</div> -->
+            <img class="slide first" src="shot1.jpg">
+       
+            <div class="right1"></div>
+            <div class="bottom1"></div>
+            <div class="top1"></div>
+            <div class="left1"></div>
+            <div class="bottomRight1"></div>
+            <div class="topLeft1"></div>
+            <div class="topRight1"></div>
+            <div class="bottomLeft1"></div>
+        </div>
+
+
+        
+<!-- <div>Federalists</div>
+<div>Name refers to the balance of power between states and national government</div>
+<div>Anti-federalists</div>
+<div>Opposed strong central government</div>
+ -->
 
 
 
-        <div id="buttonGroup">
-            <button onclick="stopClock()">Pause</button>
-            <button onclick="beginClock()">Start</button>
-            <button onclick="resetClock()">Reset</button>
+        <div id="controls">
+            <p id="val"> </p>
+            <input type="range" min="0" max="120" value="0" id="mySlider" step=".2" onmousedown="stopClock()"
+                oninput="showValue(this.value)" onchange="changeAudio(this.value)">
+            <div id="buttonGroup">
+                <button onclick="stopClock()">Pause</button>
+                <button onclick="beginClock()">Start</button>
+                <button onclick="resetClock()">Reset</button>
+            </div>
         </div>
 
 
@@ -268,25 +381,48 @@
     <script>
         const NUM_SECONDS_EACH_SLIDE = 5; // seconds for each slide 
         var num = 0;
+        var currentImageNum = 1; 
         var images = ["shot1.jpg", "shot2.jpg", "shot3.jpg", "shot4.jpg", "shot5.jpg", "shot6.jpg", "shot7.jpg", "shot8.jpg", "shot9.jpg", "shot10.jpg", "shot11.jpg"];
         // var images = ["1.png", "2.png", "3.png", "4.png", "5.png", "6.png", "7.png"];
         var text = ["My Header!", "My Other Header", "Something I liked to write! "];
         var audioFile = document.getElementById("audioFile");
         var mySlider = document.getElementById("mySlider");
 
-
+        
         $(".loading").hide(2000, function () {
             //audioFile.play(); 
             resetSlider();
             $("#content").fadeIn();
             $("#mySlider").attr("max", audioFile.duration);
-            $(".slide").attr("width", "75%");
+            $(".slide").attr("width", "100%");
 
         });
 
+        var index = 0; 
+        $(`.right${index + 1},.left${index +1},.bottom${index +1},.top${index +1},.bottomRight${index +1},.topRight${index +1},.bottomLeft${index +1},.topLeft${index +1}`).css("display", "block");                   
+
+
+        for (let i = 2; i <= images.length; i++) {
+
+            $(`#container${i - 1}`).after(`<div class='mySlides fade' id='container${i}' >
+            <img class='slide'  src='shot${i}.jpg'>
+            <div class='right${i}'></div>
+            <div class='bottom${i}'></div>
+            <div class='top${i}'></div>
+            <div class='left${i}'></div>
+            <div class='bottomRight${i}'></div>
+            <div class='topLeft${i}'></div>
+            <div class='topRight${i}'></div>
+            <div class='bottomLeft${i}'></div>
+                </div>`);
+        }
+
+
+
+
 
         // audioFile.oncanplaythrough = function() {
-        //         //alert("Can play through audio without stopping");
+        //         //alert(`Can play through audio without stopping`);
         // };
 
         mySlider.addEventListener('mouseup', beginClock);
@@ -312,6 +448,7 @@
             var floored = Math.floor(val);
             var imageNum = Math.floor((floored / NUM_SECONDS_EACH_SLIDE) % images.length);
             // log([imageNum]);
+            currentImageNum = imageNum + 1; 
             var hour = parseInt(floored / 60);
             var minute = floored % 60;
             minute = minute == 0 || minute < 10 ? ("0" + minute) : minute;
@@ -321,7 +458,9 @@
             $(".slide").each(function (index) {
                 if (index == imageNum) {
                     $(this).css("display", "block");
+                    $(`.right${index + 1},.left${index +1},.bottom${index +1},.top${index +1},.bottomRight${index +1},.topRight${index +1},.bottomLeft${index +1},.topLeft${index +1}`).css("display", "block");                   
                 } else {
+                    $(`.right${index +1},.left${index +1},.bottom${index +1},.top${index +1},.bottomRight${index +1},.topRight${index +1},.bottomLeft${index +1},.topLeft${index +1}`).css("display", "none");                   
                     $(this).css("display", "none");
                 }
             });
@@ -367,105 +506,126 @@
                 hasStarted = true;
             }
 
-            function getRandomNum() {
-                return Math.floor(Math.random() * 10);
-            }
+           
 
         }
+
+        function getRandomNum() {
+                return Math.floor(Math.random() * 10);
+        }
+
 
         function setCurTime(time) {
             // log([time]);
             audioFile.currentTime = time;
         }
 
-        var $container = document.getElementById("container");
+        //var $container = document.getElementsByClassName('slide');
+        var leftLastX = [];
+        var rightLastX = [];
+        var bottomLastY = [];
+        var topLastY = [];
+        var containerArrays = [];
+        var x = 1;
 
-        //Proxies
-        var $right = document.createElement("div");
-        var $bottom = document.createElement("div");
-        var $top = document.createElement("div");
-        var $left = document.createElement("div");
+        while (x < 12) {
+            
+            leftLastX.push(0);
+            rightLastX.push(0);
+            bottomLastY.push(0);
+            topLastY.push(0);
+            var $container = document.getElementById("container" + x);
+            containerArrays.push($container); 
+            //Proxies
+            var $right = document.createElement("div");
+            var $bottom = document.createElement("div");
+            var $top = document.createElement("div");
+            var $left = document.createElement("div");
 
-        var mainDraggable = new Draggable($container);
+            var mainDraggable = new Draggable(containerArrays[x-1]);
 
-        var rightLastX = 0;
-        var rightDraggable = new Draggable($right, {
-            trigger: ".right, .topRight, .bottomRight",
-            cursor: "e-resize",
-            onDrag: updateRight,
-            onPress: function () {
-                rightLastX = this.x;
-                mainDraggable.disable();
-            },
-            onRelease: function () {
-                mainDraggable.enable();
-            }
-        });
+
+            var rightDraggable = new Draggable($right, {
+                trigger: `.right${x}, .topRight${x}, .bottomRight${x}`,
+                cursor: "e-resize",
+                onDrag: updateRight,
+                onPress: function () {
+                    rightLastX[currentImageNum-1] = this.x;
+                    mainDraggable.disable();
+                },
+                onRelease: function () {
+                    mainDraggable.enable();
+                }
+            });
+
+            var bottomDraggable = new Draggable($bottom, {
+                trigger: `.bottom${x}, .bottomRight${x}, .bottomLeft${x}`,
+                cursor: "s-resize",
+                onDrag: updateBottom,
+                onPress: function () {
+                    bottomLastY[currentImageNum-1]  = this.y;
+                    mainDraggable.disable();
+                },
+                onRelease: function () {
+                    mainDraggable.enable();
+                }
+            });
+
+
+            var topDraggable = new Draggable($top, {
+                trigger: `.top${x}, .topRight${x}, .topLeft${x}`,
+                cursor: "n-resize",
+                onDrag: updateTop,
+                onPress: function () {
+                    topLastY[currentImageNum-1]  = this.y;
+                    mainDraggable.disable();
+                },
+                onRelease: function () {
+                    mainDraggable.enable();
+                }
+            });
+
+            var leftDraggable = new Draggable($left, {
+                trigger: `.left${x}, .topLeft${x}, .bottomLeft${x}`,
+                cursor: "w-resize",
+                onDrag: updateLeft,
+                onPress: function () {
+                    leftLastX[currentImageNum-1] = this.x;
+                    mainDraggable.disable();
+                },
+                onRelease: function () {
+                    mainDraggable.enable();
+                }
+            });
+
+            x++;
+        }
+
 
         function updateRight() {
-            var diffX = this.x - rightLastX;
-            TweenMax.set($container, { width: "+=" + diffX });
-            rightLastX = this.x;
+            var diffX = this.x - rightLastX[currentImageNum-1];
+            TweenMax.set(containerArrays[currentImageNum-1], { width: "+=" + diffX });
+            rightLastX[currentImageNum-1] = this.x;
         }
 
-        var bottomLastY = 0;
-        var bottomDraggable = new Draggable($bottom, {
-            trigger: ".bottom, .bottomRight, .bottomLeft",
-            cursor: "s-resize",
-            onDrag: updateBottom,
-            onPress: function () {
-                bottomLastY = this.y;
-                mainDraggable.disable();
-            },
-            onRelease: function () {
-                mainDraggable.enable();
-            }
-        });
+
 
         function updateBottom() {
-            var diffY = this.y - bottomLastY;
-            TweenMax.set($container, { height: "+=" + diffY });
-            bottomLastY = this.y;
+            var diffY = this.y - bottomLastY[currentImageNum-1];
+            TweenMax.set(containerArrays[currentImageNum-1], { height: "+=" + diffY });
+            bottomLastY[currentImageNum-1] = this.y;
         }
-
-        var topLastY = 0;
-        var topDraggable = new Draggable($top, {
-            trigger: ".top, .topRight, .topLeft",
-            cursor: "n-resize",
-            onDrag: updateTop,
-            onPress: function () {
-                topLastY = this.y;
-                mainDraggable.disable();
-            },
-            onRelease: function () {
-                mainDraggable.enable();
-            }
-        });
 
         function updateTop() {
-            var diffY = this.y - topLastY;
-            TweenMax.set($container, { height: "-=" + diffY, y: "+=" + diffY });
-            topLastY = this.y;
+            var diffY = this.y - topLastY[currentImageNum-1];
+            TweenMax.set(containerArrays[currentImageNum-1], { height: "-=" + diffY, y: "+=" + diffY });
+            topLastY[currentImageNum-1] = this.y;
         }
 
-        var leftLastX = 0;
-        var leftDraggable = new Draggable($left, {
-            trigger: ".left, .topLeft, .bottomLeft",
-            cursor: "w-resize",
-            onDrag: updateLeft,
-            onPress: function () {
-                leftLastX = this.x;
-                mainDraggable.disable();
-            },
-            onRelease: function () {
-                mainDraggable.enable();
-            }
-        });
-
         function updateLeft() {
-            var diffX = this.x - leftLastX;
-            TweenMax.set($container, { width: "-=" + diffX, x: "+=" + diffX });
-            leftLastX = this.x;
+            var diffX = this.x - leftLastX[currentImageNum-1];
+            TweenMax.set(containerArrays[currentImageNum-1], { width: "-=" + diffX, x: "+=" + diffX });
+            leftLastX[currentImageNum-1] = this.x;
         }
 
 
