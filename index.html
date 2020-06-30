@@ -8,6 +8,20 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/1.20.3/TweenMax.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/1.20.3/utils/Draggable.min.js"></script>
     <style>
+        body {
+             /* Screen becomes bigger because of strecth of image. Cannot use 
+             background-image: url("wood-background.jpg");
+            background-repeat: repeat;
+             background-size: 100% 150%;
+            */
+           background-color:rgb(172, 168, 167);
+            -webkit-user-select: none;
+            -webkit-touch-callout: none;
+            -moz-user-select: none;
+            -ms-user-select: none;
+            user-select: none;
+        }
+
         #container {
             display: block;
             position: relative;
@@ -199,9 +213,8 @@
             margin-left: auto;
             margin-right: auto;
             margin-top: 10%;
-            margin-top: 5%;
-            width: 50%;
-            height: 50%;
+            width: 75%;
+            height: 80%;
         }
 
         .loading {
@@ -270,7 +283,8 @@
         }
 
         .slide,
-        #content,.textSlide {
+        #content,
+        .textSlide {
             display: none;
         }
 
@@ -306,51 +320,61 @@
         .textSlide {
             background-color: #29e;
             color: white;
-            font-size: 20px; 
+            font-size: 20px;
             font-family: sans-serif;
             border-radius: 8px;
             padding: 10px;
             touch-action: none;
             z-index: 5;
             width: 120px;
-            position:absolute; 
+            position: absolute;
             overflow: hidden;
-            text-overflow: clip; 
+            text-overflow: clip;
             /* This makes things *much* easier */
             box-sizing: border-box;
         }
 
         #container1 {
             z-index: -1;
-            background-image: url("shot1.jpg"); 
+            background-image: url("shot1.jpg");
         }
+
         #container2 {
-            background-image: url("shot2.jpg"); 
+            background-image: url("shot2.jpg");
         }
+
         #container3 {
-             background-image: url("shot3.jpg"); 
+            background-image: url("shot3.jpg");
         }
+
         #container4 {
             background-image: url("shot4.jpg");
         }
+
         #container5 {
             background-image: url("shot5.jpg");
         }
+
         #container6 {
             background-image: url("shot6.jpg");
         }
+
         #container7 {
             background-image: url("shot7.jpg");
         }
+
         #container8 {
             background-image: url("shot8.jpg");
         }
+
         #container9 {
             background-image: url("shot9.jpg");
         }
+
         #container10 {
             background-image: url("shot10.jpg");
         }
+
         #container11 {
             background-image: url("shot11.jpg");
         }
@@ -358,18 +382,16 @@
         .generalSlide {
             z-index: -1;
             background-size: 100% 100%;
-            width: 100%; 
-            height: 500px;
+            width: 500px;
+            height: 550px;
             display: none;
         }
 
         @media screen and (max-width: 480px) {
             .generalSlide {
                 height: 200px;
-                }
+            }
         }
-        
-        
     </style>
 </head>
 
@@ -383,7 +405,7 @@
         </div>
     </div>
 
-  
+
 
     <div id="content">
 
@@ -392,7 +414,7 @@
             Your browser does not support the audio element.
         </audio>
 
-        <h1>Custom Range Slider</h1>
+        <h1>Lectures on US Constitution</h1>
 
 
         <div id="numbertext">1 / 11</div>
@@ -411,10 +433,10 @@
             <div class="topRight1"></div>
             <div class="bottomLeft1"></div>
         </div>  -->
-        <div id = "parent">
+        <div id="parent">
 
             <!-- <div id="resize-drag1" >Federalist vs. Anti-federalists</div> -->
-            <div class="mySlides fade slide generalSlide" id="container1" >
+            <div class="mySlides fade slide generalSlide" id="container1">
                 <div class="right1"></div>
                 <div class="bottom1"></div>
                 <div class="top1"></div>
@@ -425,7 +447,7 @@
                 <div class="bottomLeft1"></div>
             </div>
         </div>
-       
+
 
 
 
@@ -452,16 +474,16 @@
         var currentImageNum = 1;
         var images = ["shot1.jpg", "shot2.jpg", "shot3.jpg", "shot4.jpg", "shot5.jpg", "shot6.jpg", "shot7.jpg", "shot8.jpg", "shot9.jpg", "shot10.jpg", "shot11.jpg"];
         var textContainerArrays = ['<div id="resize-drag1" class="textSlide" >Federalist vs. Anti-federalists</div>',
-                '<div id="resize-drag2" class="textSlide" >Federalists</div>',
-                '<div id="resize-drag3" class="textSlide" >Name refers to the balance of power between states and national government</div>',
-                '<div id="resize-drag4" class="textSlide" >Anti-federalists</div>',
-                '<div id="resize-drag5" class="textSlide" >Anti-Federalists Cont.</div>',
-                '<div id="resize-drag6" class="textSlide" >Letters From Federal Farmer</div>',
-                '<div id="resize-drag7" class="textSlide" >Ratification 2</div>',
-                '<div id="resize-drag8" class="textSlide" >Ratification 3</div>',
-                '<div id="resize-drag9" class="textSlide" >Bill Of Right</div>',
-                '<div id="resize-drag10" class="textSlide" >Federalist Papers</div>',
-                '<div id="resize-drag11" class="textSlide" >Opposed strong central government</div>'];
+            '<div id="resize-drag2" class="textSlide" >Federalists</div>',
+            '<div id="resize-drag3" class="textSlide" >Name refers to the balance of power between states and national government</div>',
+            '<div id="resize-drag4" class="textSlide" >Anti-federalists</div>',
+            '<div id="resize-drag5" class="textSlide" >Anti-Federalists Cont.</div>',
+            '<div id="resize-drag6" class="textSlide" >Letters From Federal Farmer</div>',
+            '<div id="resize-drag7" class="textSlide" >Ratification 2</div>',
+            '<div id="resize-drag8" class="textSlide" >Ratification 3</div>',
+            '<div id="resize-drag9" class="textSlide" >Bill Of Right</div>',
+            '<div id="resize-drag10" class="textSlide" >Federalist Papers</div>',
+            '<div id="resize-drag11" class="textSlide" >Opposed strong central government</div>'];
         var text = ["My Header!", "My Other Header", "Something I liked to write! "];
         var audioFile = document.getElementById("audioFile");
         var mySlider = document.getElementById("mySlider");
@@ -472,7 +494,6 @@
             resetSlider();
             $("#content").fadeIn();
             $("#mySlider").attr("max", audioFile.duration);
-            $(".slide").attr("width", "100%");
 
         });
 
@@ -483,7 +504,7 @@
         $("#resize-drag1").css("display", "block");
         for (let i = 2; i <= images.length; i++) {
 
-            $(`#container${i - 1}`).before(textContainerArrays[i -1]);
+            $(`#container${i - 1}`).before(textContainerArrays[i - 1]);
 
             $(`#container${i - 1}`).after(`<div class='mySlides fade slide generalSlide' id='container${i}' >
             <div class='right${i}'></div>
@@ -540,11 +561,11 @@
                 if (index + 1 == imageNum + 1) {
                     $(`#container${index + 1}, .right${index + 1},.left${index + 1},.bottom${index + 1},.top${index + 1},.bottomRight${index + 1},.topRight${index + 1},.bottomLeft${index + 1},.topLeft${index + 1}`).css("display", "block");
                     $(this).css("display", "block");
-                    $("#resize-drag"+ (index + 1)).css("display", "block"); 
+                    $("#resize-drag" + (index + 1)).css("display", "block");
                 } else {
                     $(`#container${index + 1}, .right${index + 1},.left${index + 1},.bottom${index + 1},.top${index + 1},.bottomRight${index + 1},.topRight${index + 1},.bottomLeft${index + 1},.topLeft${index + 1}`).css("display", "none");
                     $(this).css("display", "none");
-                    $("#resize-drag"+ (index + 1)).css("display", "none"); 
+                    $("#resize-drag" + (index + 1)).css("display", "none");
                 }
             });
             $("#pText").css("top", `${(imageNum + 2) * 10}%`);
@@ -729,43 +750,43 @@
         var textRightLastX = [];
         var textBottomLastY = [];
         var textTopLastY = [];
-           
+
         var p = 1;
 
         // this function is used later in the resizing and gesture demos
-        window.dragMoveListener = dragMoveListener; 
+        window.dragMoveListener = dragMoveListener;
 
-        while (p < 12) { 
+        while (p < 12) {
 
             interact(`#resize-drag${p}`)
                 .resizable({
                     // resize from all edges and corners
                     edges: { left: true, right: true, bottom: true, top: true },
-    
+
                     listeners: {
                         move(event) {
                             var target = event.target
                             var x = (parseFloat(target.getAttribute('data-x')) || 0)
                             var y = (parseFloat(target.getAttribute('data-y')) || 0)
-    
+
                             // update the element's style
                             target.style.width = event.rect.width + 'px'
                             target.style.height = event.rect.height + 'px'
-    
+
                             var area = parseFloat(event.rect.height) * parseFloat(event.rect.width); // this area determines how to know when to increase and decrease the font size.  
-                            var currentSize = $("#resize-drag"+(currentImageNum)).css('font-size'); 
+                            var currentSize = $("#resize-drag" + (currentImageNum)).css('font-size');
                             var newSize = Math.pow(parseFloat(area), .33) + 2;  // use the 4th root, because large numbers don't change it very much 
                             log(['currentSize', parseFloat(newSize)]);
                             log(['Item #', currentImageNum, 'area', area]);
-                        
-                            $("#resize-drag"+(currentImageNum)).css('font-size', newSize);
+
+                            $("#resize-drag" + (currentImageNum)).css('font-size', newSize);
                             // translate when resizing from top or left edges
                             x += event.deltaRect.left
                             y += event.deltaRect.top
-    
+
                             target.style.webkitTransform = target.style.transform =
                                 'translate(' + x + 'px,' + y + 'px)'
-    
+
                             target.setAttribute('data-x', x)
                             target.setAttribute('data-y', y)
                             // target.textContent = Math.round(event.rect.width) + '\u00D7' + Math.round(event.rect.height)
@@ -776,14 +797,14 @@
                         interact.modifiers.restrictEdges({
                             outer: 'parent'
                         }),
-    
+
                         // minimum size and max size 
                         interact.modifiers.restrictSize({
-                            min: { width: 100, height: 115 }, 
+                            min: { width: 100, height: 115 },
                             max: { width: 300, height: 100 }
                         })
                     ],
-    
+
                     inertia: true
                 })
                 .draggable({
@@ -797,9 +818,9 @@
                     ]
                 })
 
-                p++; 
+            p++;
         } // end of interact 
-            
+
 
     </script>
 
