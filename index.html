@@ -10,11 +10,12 @@
     <style>
         body {
             /* Screen becomes bigger because of strecth of image. Cannot use 
-             background-image: url("wood-background.jpg");
+             background-image: url("wood-bg.jpg");
             background-repeat: repeat;
              background-size: 100% 150%;
-            */
-            background-color: rgb(172, 168, 167);
+             */
+            
+            background-color: rgb(233, 199, 155); 
             -webkit-user-select: none;
             -webkit-touch-callout: none;
             -moz-user-select: none;
@@ -213,7 +214,7 @@
         #content {
             margin-left: auto;
             margin-right: auto;
-            margin-top: 10%;
+            margin-top: 3%;
             width: 50%;
             height: 80%;
         }
@@ -319,7 +320,7 @@
         }
 
         .textSlide {
-            background-color: #29e;
+            background-color: rgb(121, 138, 150);
             color: white;
             font-size: 20px;
             font-family: sans-serif;
@@ -328,6 +329,7 @@
             touch-action: none;
             z-index: 5;
             width: 120px;
+            height: 100px; 
             position: absolute;
             overflow: hidden;
             text-overflow: clip;
@@ -388,17 +390,28 @@
             display: none;
         }
 
+        .shadow {
+            filter: drop-shadow(8px 8px 10px yellow); 
+        }
+
         @media screen and (max-width: 480px) {
             .generalSlide {
                 height: 200px;
             }
+
+            .textSlide {
+                width: 60px;
+                height: 75px; 
+            }
         }
     </style>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/interactjs/dist/interact.min.js"></script>
 </head>
 
 <body>
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/interactjs/dist/interact.min.js"></script>
+
+    <h1>Lectures on US Constitution</h1>
 
     <div class="loading">
         <h1>Content is loading...</h1>
@@ -410,13 +423,11 @@
 
     <div id="content">
 
+
         <audio id="audioFile" controls preload="auto">
             <source src="lecture.wav" type="audio/wav">
             Your browser does not support the audio element.
         </audio>
-
-        <h1>Lectures on US Constitution</h1>
-
 
         <div id="numbertext">1 / 11</div>
         <!-- <div class="resize-drag">
@@ -449,9 +460,6 @@
         </div>
         <!-- </div> -->
 
-
-
-
         <div id="controls">
             <p id="val"> </p>
             <input type="range" min="0" max="120" value="0" id="mySlider" step=".2" onmousedown="stopClock()"
@@ -463,8 +471,6 @@
             </div>
         </div>
 
-
-
     </div>
 
 
@@ -474,17 +480,17 @@
         var num = 0;
         var currentImageNum = 1;
         var images = ["shot1.jpg", "shot2.jpg", "shot3.jpg", "shot4.jpg", "shot5.jpg", "shot6.jpg", "shot7.jpg", "shot8.jpg", "shot9.jpg", "shot10.jpg", "shot11.jpg"];
-        var textContainerArrays = ['<div id="resize-drag1" class="textSlide" >Federalist vs. Anti-federalists</div>',
-            '<div id="resize-drag2" class="textSlide" >Federalists</div>',
-            '<div id="resize-drag3" class="textSlide" >Name refers to the balance of power between states and national government</div>',
-            '<div id="resize-drag4" class="textSlide" >Anti-federalists</div>',
-            '<div id="resize-drag5" class="textSlide" >Anti-Federalists Cont.</div>',
-            '<div id="resize-drag6" class="textSlide" >Letters From Federal Farmer</div>',
-            '<div id="resize-drag7" class="textSlide" >Ratification 2</div>',
-            '<div id="resize-drag8" class="textSlide" >Ratification 3</div>',
-            '<div id="resize-drag9" class="textSlide" >Bill Of Right</div>',
-            '<div id="resize-drag10" class="textSlide" >Federalist Papers</div>',
-            '<div id="resize-drag11" class="textSlide" >Opposed strong central government</div>'];
+        var textContainerArrays = ['<div id="resize-drag1" class="textSlide ">Federalist vs. Anti-federalists</div>',
+            '<div id="resize-drag2" class="textSlide ">Federalists</div>',
+            '<div id="resize-drag3" class="textSlide ">Name refers to the balance of power between states and national government</div>',
+            '<div id="resize-drag4" class="textSlide ">Anti-federalists</div>',
+            '<div id="resize-drag5" class="textSlide ">Anti-Federalists Cont.</div>',
+            '<div id="resize-drag6" class="textSlide ">Letters From Federal Farmer</div>',
+            '<div id="resize-drag7" class="textSlide ">Ratification 2</div>',
+            '<div id="resize-drag8" class="textSlide ">Ratification 3</div>',
+            '<div id="resize-drag9" class="textSlide ">Bill Of Right</div>',
+            '<div id="resize-drag10" class="textSlide ">Federalist Papers</div>',
+            '<div id="resize-drag11" class="textSlide ">Opposed strong central government</div>'];
         var text = ["My Header!", "My Other Header", "Something I liked to write! "];
         var audioFile = document.getElementById("audioFile");
         var mySlider = document.getElementById("mySlider");
@@ -518,14 +524,6 @@
             <div class='bottomLeft${i}'></div>
                 </div>`);
         }
-
-
-
-
-
-        // audioFile.oncanplaythrough = function() {
-        //         //alert(`Can play through audio without stopping`);
-        // };
 
         mySlider.addEventListener('mouseup', beginClock);
 
@@ -610,9 +608,6 @@
                 }, 200);
                 hasStarted = true;
             }
-
-
-
         }
 
 
@@ -649,8 +644,14 @@
             instantObj.$top = $top;
             instantObj.$bottom = $bottom;
 
-
-            var mainDraggable = new Draggable(instantObj.$container);
+            var mainDraggable = new Draggable(instantObj.$container, {
+                onDrag:function(){
+                    $(`#container${currentImageNum}`).addClass("shadow");
+                },
+                onRelease: function () {
+                    $(`#container${currentImageNum}`).removeClass("shadow");
+                }
+            });
             instantObj.mainDraggable = mainDraggable;
 
             var rightDraggable = new Draggable(instantObj.$right, {
@@ -661,13 +662,16 @@
                     //console.log(`Image Num: ${currentImageNum} updateRight  onDrag rightLastX`, rightLastX[currentImageNum - 1]); 
                     TweenMax.set(containerArrays[currentImageNum - 1].$container, { width: "+=" + diffX });
                     containerArrays[currentImageNum - 1].rightLastX = this.x;
+                    $(`#container${currentImageNum}`).addClass("shadow");
                 },
                 onPress: function () {
                     containerArrays[currentImageNum - 1].rightLastX = this.x;
                     containerArrays[currentImageNum - 1].mainDraggable.disable();
+                    $(`#container${currentImageNum}`).addClass("shadow");
                 },
                 onRelease: function () {
                     containerArrays[currentImageNum - 1].mainDraggable.enable();
+                    $(`#container${currentImageNum}`).removeClass("shadow");
                 }
             });
 
@@ -679,13 +683,17 @@
                     //console.log(`Image Num: ${currentImageNum} updateBottom  onDrag bottomLastY`, bottomLastY[currentImageNum - 1]);
                     TweenMax.set(containerArrays[currentImageNum - 1].$container, { height: "+=" + diffY });
                     containerArrays[currentImageNum - 1].bottomLastY = this.y;
+                    $(`#container${currentImageNum}`).addClass("shadow");
                 },
                 onPress: function () {
                     containerArrays[currentImageNum - 1].bottomLastY = this.y;
                     containerArrays[currentImageNum - 1].mainDraggable.disable();
+                    $(`#container${currentImageNum}`).addClass("shadow");
                 },
                 onRelease: function () {
                     containerArrays[currentImageNum - 1].mainDraggable.enable();
+                    $(`#container${currentImageNum}`).removeClass("shadow");
+
                 }
             });
 
@@ -697,13 +705,16 @@
                     var diffY = this.y - containerArrays[currentImageNum - 1].topLastY; 
                     TweenMax.set(containerArrays[currentImageNum - 1].$container, { height: "-=" + diffY, y: "+=" + diffY });
                     containerArrays[currentImageNum - 1].topLastY = this.y;
+                    $(`#container${currentImageNum}`).addClass("shadow");
                 },
                 onPress: function () {
                     containerArrays[currentImageNum - 1].topLastY = this.y;
-                    mainDraggableArrays[currentImageNum - 1].disable();
+                    containerArrays[currentImageNum - 1].mainDraggable.disable();
+                    $(`#container${currentImageNum}`).addClass("shadow");
                 },
                 onRelease: function () {
                     containerArrays[currentImageNum - 1].mainDraggable.enable();
+                    $(`#container${currentImageNum}`).removeClass("shadow");
                 }
             });
 
@@ -714,14 +725,17 @@
                     var diffX = this.x - containerArrays[currentImageNum - 1].leftLastX;
                     TweenMax.set(containerArrays[currentImageNum - 1].$container, { width: "-=" + diffX, x: "+=" + diffX });
                     containerArrays[currentImageNum - 1].leftLastX = this.x;
+                    $(`#container${currentImageNum}`).addClass("shadow");
                 },
                 onPress: function () {
                     // console.log(`Image Num: ${currentImageNum} leftDrag  onPress`, this.x); 
                     containerArrays[currentImageNum - 1].leftLastX = this.x;
                     containerArrays[currentImageNum - 1].mainDraggable.disable();
+                    $(`#container${currentImageNum}`).addClass("shadow");
                 },
                 onRelease: function () {
                     containerArrays[currentImageNum - 1].mainDraggable.enable();
+                    $(`#container${currentImageNum}`).removeClass("shadow");
                 }
             });
 
@@ -730,13 +744,13 @@
             x++;
         }
 
-
         function dragMoveListener(event) {
             var target = event.target
             // keep the dragged position in the data-x/data-y attributes
             var x = (parseFloat(target.getAttribute('data-x')) || 0) + event.dx
             var y = (parseFloat(target.getAttribute('data-y')) || 0) + event.dy
-
+            $(`#resize-drag${currentImageNum}`).addClass("shadow");
+           
             // translate the element
             target.style.webkitTransform =
                 target.style.transform =
@@ -745,8 +759,25 @@
             // update the posiion attributes
             target.setAttribute('data-x', x)
             target.setAttribute('data-y', y)
+           
         }
 
+        var maxTextSizeHeight = 400; 
+        var maxTextSizeWidth = 500; 
+        var minTextSizeHeight = 150; 
+        var minTextSizeWidth = 120; 
+        if (window.matchMedia("(max-width: 767px)").matches)  
+        { 
+            // The viewport is less than 768 pixels wide 
+            //document.write("This is a mobile device."); 
+            maxTextSizeHeight = maxTextSizeHeight /2; 
+            maxTextSizeWidth = maxTextSizeWidth /2; 
+            minTextSizeHeight = minTextSizeHeight / 2; 
+            minTextSizeWidth = minTextSizeWidth / 2; 
+        } //else { 
+            // The viewport is at least 768 pixels wide 
+           // document.write("This is a tablet or desktop."); 
+        // } 
 
         // Interact JS 
         var textLeftLastX = [];
@@ -758,16 +789,28 @@
 
         // this function is used later in the resizing and gesture demos
         window.dragMoveListener = dragMoveListener;
-
+       
         while (p < 12) {
+            $(`#resize-drag${p}`).click(function(){
+               // $(this).removeClass("shadow"); 
+               console.log("mouseup"); 
+            });
 
             interact(`#resize-drag${p}`)
+                .on('hold', function (event) {
+                    $(`#resize-drag${currentImageNum}`).addClass("shadow");
+                 })
+                .on('dragend', function(){
+                     $(`#resize-drag${currentImageNum}`).removeClass("shadow");
+                })
                 .resizable({
                     // resize from all edges and corners
                     edges: { left: true, right: true, bottom: true, top: true },
 
                     listeners: {
                         move(event) {
+                            $(`#resize-drag${currentImageNum}`).addClass("shadow");
+
                             var target = event.target
                             var x = (parseFloat(target.getAttribute('data-x')) || 0)
                             var y = (parseFloat(target.getAttribute('data-y')) || 0)
@@ -779,8 +822,8 @@
                             var area = parseFloat(event.rect.height) * parseFloat(event.rect.width); // this area determines how to know when to increase and decrease the font size.  
                             var currentSize = $("#resize-drag" + (currentImageNum)).css('font-size');
                             var newSize = Math.pow(parseFloat(area), .33) + 2;  // use the 4th root, because large numbers don't change it very much 
-                            log(['currentSize', parseFloat(newSize)]);
-                            log(['Item #', currentImageNum, 'area', area]);
+                           // log(['currentSize', parseFloat(newSize)]);
+                            //log(['Item #', currentImageNum, 'area', area]);
 
                             $("#resize-drag" + (currentImageNum)).css('font-size', newSize);
                             // translate when resizing from top or left edges
@@ -792,7 +835,12 @@
 
                             target.setAttribute('data-x', x)
                             target.setAttribute('data-y', y)
+
+            
                             // target.textContent = Math.round(event.rect.width) + '\u00D7' + Math.round(event.rect.height)
+                        },
+                        end (event) {
+                            $(`#resize-drag${currentImageNum}`).removeClass("shadow");
                         }
                     },
                     modifiers: [
@@ -803,8 +851,8 @@
 
                         // minimum size and max size 
                         interact.modifiers.restrictSize({
-                            min: { width: 100, height: 115 },
-                            max: { width: 500, height: 100 }
+                            min: { width: minTextSizeWidth, height: minTextSizeHeight },
+                            max: { width: maxTextSizeWidth, height: maxTextSizeHeight }
                         })
                     ],
 
