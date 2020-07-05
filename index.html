@@ -3,8 +3,7 @@
 
 <head>
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <!-- https://greensock.com/forums/topic/17657-draggable-resizable/?tab=comments#comment-80098 -->
-    <!-- https://www.w3schools.com/cssref/tryit.asp?filename=trycss_position2 -->
+    <!-- https://greensock.com/forums/topic/17657-draggable-resizable/?tab=comments#comment-80098  Example for dragging and resize -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/1.20.3/TweenMax.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/1.20.3/utils/Draggable.min.js"></script>
     <style>
@@ -430,24 +429,6 @@
         </audio>
 
         <div id="numbertext">1 / 11</div>
-        <!-- <div class="resize-drag">
-            Resize from any edge or corner
-        </div> -->
-        <!-- <div class="mySlides fade" id="container1">
-            <div>Federalist vs. Anti-federalists</div> 
-            <img class="slide first" src="shot1.jpg">
-            <div class="right1"></div>
-            <div class="bottom1"></div>
-            <div class="top1"></div>
-            <div class="left1"></div>
-            <div class="bottomRight1"></div>
-            <div class="topLeft1"></div>
-            <div class="topRight1"></div>
-            <div class="bottomLeft1"></div>
-        </div>  -->
-        <!-- <div id="parent"> -->
-
-        <!-- <div id="resize-drag1" >Federalist vs. Anti-federalists</div> -->
         <div class="fade slide generalSlide" id="container1">
             <div class="right1"></div>
             <div class="bottom1"></div>
@@ -507,22 +488,27 @@
         var index = 0;
         $(`#container${index + 1}, .right${index + 1},.left${index + 1},.bottom${index + 1},.top${index + 1},.bottomRight${index + 1},.topRight${index + 1},.bottomLeft${index + 1},.topLeft${index + 1}`).css("display", "block");
         $(`#container${index + 1}`).before(textContainerArrays[index]);
+        $(`#container${index + 1}`)
+                    .bind('touchstart', addShadow)
+                    .mousedown(addShadow)
+                    .bind('mouseup mouseleave touchend',removeShadow); 
 
         $("#resize-drag1").css("display", "block");
         for (let i = 2; i <= images.length; i++) {
 
             $(`#container${i - 1}`).before(textContainerArrays[i - 1]);
 
-            $(`#container${i - 1}`).after(`<div class='fade slide generalSlide' id='container${i}' >
-            <div class='right${i}'></div>
-            <div class='bottom${i}'></div>
-            <div class='top${i}'></div>
-            <div class='left${i}'></div>
-            <div class='bottomRight${i}'></div>
-            <div class='topLeft${i}'></div>
-            <div class='topRight${i}'></div>
-            <div class='bottomLeft${i}'></div>
-                </div>`);
+            $(`#container${i - 1}`).after(`
+                    <div class='fade slide generalSlide' id='container${i}' >
+                            <div class='right${i}'></div>
+                            <div class='bottom${i}'></div>
+                            <div class='top${i}'></div>
+                            <div class='left${i}'></div>
+                            <div class='bottomRight${i}'></div>
+                            <div class='topLeft${i}'></div>
+                            <div class='topRight${i}'></div>
+                            <div class='bottomLeft${i}'></div>
+                    </div>`);
         }
 
         mySlider.addEventListener('mouseup', beginClock);
@@ -614,6 +600,13 @@
         function setCurTime(time) {
             // log([time]);
             audioFile.currentTime = time;
+        }
+
+        function addShadow() {
+            $(this).addClass('shadow');
+        }
+        function removeShadow(){
+            $(this).removeClass("shadow");
         }
 
         //var $container = document.getElementsByClassName('slide');
@@ -791,10 +784,6 @@
         window.dragMoveListener = dragMoveListener;
        
         while (p < 12) {
-            $(`#resize-drag${p}`).click(function(){
-               // $(this).removeClass("shadow"); 
-               console.log("mouseup"); 
-            });
 
             interact(`#resize-drag${p}`)
                 .on('hold', function (event) {
@@ -868,10 +857,19 @@
                         })
                     ]
                 })
+            
+                // $(`#resize-drag${p}`).prop("onclick", null).off("click");
+                //$(`#container${p}`).prop("onmousedown", null).off("mousedown");
+         
+                $(`#resize-drag${p}`)
+                    .bind('touchstart', addShadow) // touchstart is for mobile 
+                    .mousedown(addShadow) // mouse down is for desktop because they have a mouse. 
+                    .bind('mouseup mouseleave touchend',removeShadow); 
 
             p++;
         } // end of interact 
 
+        
 
     </script>
 
